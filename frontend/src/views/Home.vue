@@ -5,7 +5,7 @@
      <div class="filter without-isotope extras-off filter-bg-decoration"> 
       <div class="filter-categories">
           <a href="/" class="show-all act" data-filter="*">Jokes</a>
-           <a href="http://" data-filter="*">发笑话</a>
+           <a href="http://my.jsjoke.net" data-filter="*">发笑话</a>
       </div>
       <!-- filter-categories-->
      </div>  
