@@ -31,7 +31,6 @@ module.exports = function (app){
   }));
 
   app.get('/jokes' ,function (req,res){
-
 		Jokes.find()
          .sort('-_id')
          .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
@@ -41,7 +40,26 @@ module.exports = function (app){
          })
    })
    // get jokes end
+   app.get('/jokes/:id',function(req,res){
 
+      Jokes.findOne({'_id': req.params['id']},function(err,j){
+			  if (req.query['joke']){
+				  j.joke = j.joke + 1
+          j.save(function(err,data){
+						res.json(data)
+          })
+         } else if (req.query['unjoke']) {
+
+				  j.unjoke = j.unjoke + 1
+          j.save(function(err,data){
+						res.json(data)
+          })
+        } else {
+					res.json(j)
+        }
+      
+      })
+   })
 
 }
 

@@ -10,12 +10,17 @@
                 <tbody><tr>
                   <th style="width: 10px">#</th>
                   <th>Task</th>
+                  <th style="width: 40px">发布</th>
+                  <th style="width: 40px">修改</th>
                   <th style="width: 40px">删除</th>
-                  <th style="width: 40px">操作</th>
                 </tr>
                 <tr v-for='(b,index) in jokes'>
                   <td>{{index}}.</td>
                   <td>{{b.title||b.createdate}}</td>
+                  <td>
+                    <a v-if="b.published" ><span class="badge">已发布</span></a>
+                    <a v-else  @click="publish(b._id)"><span class="badge bg-blue">已发布</span></a>
+                  </td>
                   <td><a v-bind:href="'/admin/editjoke?jokeid='+b._id"><span class="badge bg-blue">修改</span></a></td>
                   <td @click='deletejoke(b._id)'><span class="badge bg-red">删除</span></td>
                 </tr>
@@ -59,6 +64,10 @@ export default {
         .then(function (response) {
           that.jokes = response.data
         })
+    },
+    publish (id) {
+      axios.put(this.jokedel + '/' + id, { published: 1 })
+      window.location.reload()
     },
     deletejoke (id) {
       axios.delete(this.jokedel + '/' + id)

@@ -18,6 +18,7 @@ module.exports = function (app){
     pv: Number,
     joke: Number,
     unjoke: Number,
+    published: Number, // 1 ,show. 0. hide
     author  : [ {type : mongoose.Schema.ObjectId, ref : 'accounts'} ],
   }))
   .methods(['get','post','put','delete']);
@@ -43,6 +44,7 @@ module.exports = function (app){
       req.body['pv'] = 1
       req.body['joke'] = 0
       req.body['unjoke'] = 0
+      req.body['published'] = 0
       req.body['author'] = req.user._id
       next();
     } else {

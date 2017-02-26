@@ -13,11 +13,11 @@
      <!-- 2 content-->
      <div class="articles-list circle-fancy-style loading-effect-fade-in" data-cur-page="1" >
 
-<article class="post post-14301 dt_gallery type-dt_gallery status-publish hentry dt_gallery_category-macro dt_gallery_category-objects dt_gallery_category-13 dt_gallery_category-243 media-wide bg-on fullwidth-img text-centered" v-for='j in jokes'>
+<article class="post post-14301 dt_gallery type-dt_gallery status-publish hentry dt_gallery_category-macro dt_gallery_category-objects dt_gallery_category-13 dt_gallery_category-243 media-wide bg-on fullwidth-img" v-for='j in jokes'>
 
-<section class="items-grid wf-container round-images">
+<section class="items-grid wf-container round-images" style="margin:-10px;">
 
-<div style="padding:10px;">
+<div style="padding-left:10px;">
  <div class="borders">
   <article class="post-format-standard">
    <div class="wf-td">
@@ -34,11 +34,13 @@
 </div>
 
 </section>
-
- <h3 v-if="j.title">{{j.title}}</h3>
-
-<div v-html='j.content' > </div>
-
+    <div class="project-list-content" v-if="j.title"><h3 class="entry-title"> <a href="" title="Lorem ipsum elit nulla emet" rel="bookmark">{{j.title}}</a></h3></div>
+    <div v-html='j.content' > </div>
+ 
+    <div class="filter-categories">
+     <a @click="joke(j,1)" class="show-all act" >可乐 {{j.joke}}</a>
+     <a @click="joke(j,0)" class="show-all act" >无耻 {{j.unjoke}}</a>
+    </div>
 </article>
 
    
@@ -59,7 +61,7 @@ export default {
   data () {
     return {
       jokes: null,
-      jokeurl: '/jokes?sort=-_id'
+      jokeurl: '/jokes'
     }
   },
   created () {
@@ -67,9 +69,18 @@ export default {
   },
 
   methods: {
+    joke (j, jo) {
+      if (jo) {
+        j.joke += 1
+        axios.get(this.jokeurl + '/' + j._id + '?joke=1')
+      } else {
+        j.unjoke += 1
+        axios.get(this.jokeurl + '/' + j._id + '?unjoke=1')
+      }
+    },
     getJokes () {
       var that = this
-      axios.get(this.jokeurl)
+      axios.get(this.jokeurl + '?sort=-_id')
         .then(function (response) {
           that.jokes = response.data
         })
@@ -81,4 +92,5 @@ export default {
 </script>
 <style>
 div > img {width:50%;}
+a {text-decoration:none;}
 </style>
