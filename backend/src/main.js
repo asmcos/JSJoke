@@ -15,7 +15,7 @@ require('admin-lte/dist/css/skins/skin-blue.min.css')
 var menuvue = new Vue({
   el: '#menu_main',
   data: {
-    userinfo: { username: 'Joker' },
+    userinfo: { username: 'Joker', avatar: '/static/default-img.png' },
     menus: [
       { title: 'MENU', vclass: 'header' },
       { title: 'Joke管理',
@@ -34,6 +34,9 @@ var menuvue = new Vue({
 axios.get('/my')
   .then(function (response) {
     menuvue.$options.data().userinfo = response.data
+    if (!response.data.avatar) {
+      menuvue.$options.data().userinfo.avatar = '/static/default-img.png'
+    }
   })
 
 window.menuvue = menuvue

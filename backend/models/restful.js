@@ -16,6 +16,9 @@ module.exports = function (app){
     content:String,
     createdate :Date,
     pv: Number,
+    joke: Number,
+    unjoke: Number,
+    author  : [ {type : mongoose.Schema.ObjectId, ref : 'accounts'} ],
   }))
   .methods(['get','post','put','delete']);
 
@@ -23,17 +26,24 @@ module.exports = function (app){
     if (req.params.id){
 				var	pv = res.locals.bundle.pv + 1
         res.locals.bundle.pv = pv
-        Resource.update({_id:req.params.id},{pv:pv},function(err, count, resp) {
+        Jokes.update({_id:req.params.id},{pv:pv},function(err, count, resp) {
         });
-
-    }
+    }  
     next();
+  })
+
+  Jokes.before('get', function(req, res, next) {
+			req.body.author = req.user._id
+      next();
   })
 
   Jokes.before('post', function(req, res, next) {
     if(req.isAuthenticated()){
       req.body['createdate'] = new Date()
       req.body['pv'] = 1
+      req.body['joke'] = 0
+      req.body['unjoke'] = 0
+      req.body['author'] = req.user._id
       next();
     } else {
 			res.sendStatus(403);
@@ -42,6 +52,7 @@ module.exports = function (app){
 
   Jokes.before('put', function(req, res, next) {
     if(req.isAuthenticated()){
+      
       next();
     } else {
 			res.sendStatus(403);

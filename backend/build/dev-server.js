@@ -12,8 +12,10 @@ var webpack = require('webpack')
 var logger   = require('morgan');
 var app = express()
 
-require('../models/restful')(app) // connect mongodb jsjoke
+require('../common/common')(app) //set app
 require('../models/user')(app) //user register , login 
+require('../models/restful')(app) // connect mongodb jsjoke
+require('../common/uploadimage')(app) //upload image
 
 
 var webpackConfig = process.env.NODE_ENV === 'testing'
