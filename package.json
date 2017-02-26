@@ -13,6 +13,17 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "admin-lte": "^2.3.11",
+    "axios": "^0.15.3",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.1",
+    "extract-text-webpack-plugin": "^2.0.0-rc.3",
+    "method-override": "^2.3.7",
+    "mongoose": "^4.8.4",
+    "morgan": "^1.8.1",
+    "node-restful": "^0.2.6",
+    "passport": "^0.3.2",
+    "passport-local-mongoose": "^4.0.0",
     "vue": "^2.1.10",
     "vue-router": "^2.2.0"
   },

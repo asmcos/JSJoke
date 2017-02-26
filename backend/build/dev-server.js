@@ -9,20 +9,24 @@ var opn = require('opn')
 var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
-var proxyMiddleware = require('http-proxy-middleware')
+var logger   = require('morgan');
+var app = express()
+
+require('../models/restful')(app) // connect mongodb jsjoke
+require('../models/user')(app) //user register , login 
+
+
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.dev.port
+var port = 9009 || process.env.PORT || config.dev.port
 // automatically open browser, if not set will be false
 var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
-var proxyTable = config.dev.proxyTable
 
-var app = express()
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
@@ -41,17 +45,34 @@ compiler.plugin('compilation', function (compilation) {
   })
 })
 
-// proxy api requests
-Object.keys(proxyTable).forEach(function (context) {
-  var options = proxyTable[context]
-  if (typeof options === 'string') {
-    options = { target: options }
+app.use(logger('dev'));
+
+// serve pure static assets
+var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
+app.use(staticPath, express.static('./static'))
+app.use(express.static(path.resolve(__dirname,'../dist')));
+app.use(express.static(path.resolve(__dirname,'../../third/ckeditor')));
+app.use(express.static(path.resolve(__dirname,'../../uploads')));
+
+app.get(['/admin/register'],function (req,res){
+    res.sendFile(path.resolve(__dirname, '../src/register.html'));
+})
+
+app.get(['/admin/login'],function (req,res){
+    res.sendFile(path.resolve(__dirname, '../src/login.html'));
+})
+
+app.get(["/admin/*","/"],function (req,res){
+  if(req.isAuthenticated()){
+    res.sendFile(path.resolve(__dirname, '../src/index.html'));
   }
-  app.use(proxyMiddleware(options.filter || context, options))
+  else {
+    res.redirect('/admin/login');
+  }
 })
 
 // handle fallback for HTML5 history API
-app.use(require('connect-history-api-fallback')())
+//app.use(require('connect-history-api-fallback')())
 
 // serve webpack bundle output
 app.use(devMiddleware)
@@ -60,9 +81,6 @@ app.use(devMiddleware)
 // compilation error display
 app.use(hotMiddleware)
 
-// serve pure static assets
-var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
-app.use(staticPath, express.static('./static'))
 
 var uri = 'http://localhost:' + port
 
