@@ -46,6 +46,9 @@ app.get(["/"],function (req,res){
     res.sendFile(path.resolve(__dirname, '../src/index.html'));
 })
 
+app.get(["/m"],function (req,res){
+    res.sendFile(path.resolve(__dirname, '../src/m.html'));
+})
 
 // serve webpack bundle output
 app.use(devMiddleware)

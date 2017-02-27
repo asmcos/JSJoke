@@ -9,7 +9,8 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './frontend/src/main.js'
+    app: './frontend/src/main.js',
+    mapp: './frontend/src/m.js'
   },
   output: {
     path: config.build.assetsRoot,

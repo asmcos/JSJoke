@@ -1,8 +1,8 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
-import router from './router'
+import Mapp from './Mapp'
+import router from './router/m'
 
 Vue.filter('GetYMD', function (value) {
   var d = new Date(value)
@@ -12,9 +12,8 @@ Vue.filter('GetYMD', function (value) {
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#mapp',
   router,
-  template: '<App/>',
-  components: { App }
+  template: '<Mapp/>',
+  components: { Mapp }
 })
-
