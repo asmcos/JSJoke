@@ -19,7 +19,7 @@
                   <td>{{b.title||b.createdate}}</td>
                   <td>
                     <a v-if="b.published" ><span class="badge">已发布</span></a>
-                    <a v-else  @click="publish(b._id)"><span class="badge bg-blue">已发布</span></a>
+                    <a v-else  @click="publish(b._id)"><span class="badge bg-blue">发布</span></a>
                   </td>
                   <td><a v-bind:href="'/admin/editjoke?jokeid='+b._id"><span class="badge bg-blue">修改</span></a></td>
                   <td @click='deletejoke(b._id)'><span class="badge bg-red">删除</span></td>
