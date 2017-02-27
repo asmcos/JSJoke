@@ -1,6 +1,17 @@
 <template>
 <div class="page preview js_show" style="background-color:#eee">
        <div class="weui-cells">
+           <div class="page__bd page__bd_spacing" style="background-color:#3c3c3c;height:60px;">
+                  <div class="weui-flex js_category">
+                    <a href="http://jsjoke.net/m"> 
+                     <p class="weui-flex__item" style="color:#ddd;margin:15px;"> < </p>
+                    </a>
+                    <p class="weui-flex__item" style="color:#ddd;margin:15px;">笑话圈</p>
+                    <a href="/m/newjoke">
+                     <img src="/static/camera.png" style="width:40px;height:30px;margin:15px;" alt="">
+                    </a>
+                </div>
+           </div>
            <div class="weui-cell">
                 <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
                     <img v-bind:src="userinfo.avatar||'/static/default-img.png'" style="width: 50px;display: block">
