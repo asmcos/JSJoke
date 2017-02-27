@@ -8,6 +8,7 @@ if (!process.env.NODE_ENV) {
 var opn = require('opn')
 var path = require('path')
 var express = require('express')
+var logger   = require('morgan')
 var webpack = require('webpack')
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
@@ -21,6 +22,8 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 
 var app = express()
+
+app.use(logger("dev"))
 var compiler = webpack(webpackConfig)
 
 require('../models/restful')(app)
