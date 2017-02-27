@@ -13,7 +13,7 @@
                 
                 <p class="weui-media-box__desc">{{j.createdate | getYMD }}</p>
                 <p class="weui-media-box__desc">
-                   <article class="weui-article">
+                   <article class="weui-article" style="padding-left:0px;">
                      <section>
                        <div v-html="j.content"> </div>
                      </section>
