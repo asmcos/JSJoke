@@ -12,8 +12,10 @@ router.post('/register', function(req, res, next) {
     }
 
     console.log('user registered!');
-
-    res.redirect('/');
+     //auto login
+    passport.authenticate('local')(req, res, function () {
+             res.redirect('/');
+    })
   });
 });
 

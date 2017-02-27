@@ -73,6 +73,19 @@ app.get(["/admin/*","/"],function (req,res){
   }
 })
 
+app.get(['/m/register','/m/login'],function (req,res){
+    res.sendFile(path.resolve(__dirname, '../src/m.html'));
+})
+
+app.get(["/m/*","/m"],function (req,res){
+  if(req.isAuthenticated()){
+    res.sendFile(path.resolve(__dirname, '../src/m.html'));
+  }
+  else {
+    res.redirect('/m/login');
+  }
+})
+
 // handle fallback for HTML5 history API
 //app.use(require('connect-history-api-fallback')())
 
