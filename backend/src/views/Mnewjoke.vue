@@ -12,6 +12,7 @@
      <div class="weui-btn-area">
             <a class="weui-btn weui-btn_primary" @click="send" id="showTooltips">确定</a>
      </div>
+   </div> <!-- page__bd -->
 
 </div>
 </template>
