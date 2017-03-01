@@ -42,6 +42,15 @@
      <div class="weui-btn-area">
             <a class="weui-btn weui-btn_primary" @click="send" id="showTooltips">确定</a>
      </div>
+     <div id="loadingToast" style="display:none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">视频上传中</p>
+        </div>
+    </div>
+
+
    </div> <!-- page__bd -->
 
 </div>
@@ -81,6 +90,7 @@ export default {
       // Don't select another...
       document.getElementById("select2").disabled=true;
       var s = $("#select2").val()
+      $("#loadingToast").show()
       var formElement = document.querySelector("#uploadfile");
       var formData = new FormData(formElement);
       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
@@ -88,7 +98,7 @@ export default {
       this.total += 1
       axios.post(this.uploadurl, formData, config)
         .then(function (response) {
-          console.log(response.data)
+          $("#loadingToast").hide()
           that.done += 1
           if (s === '1') {
             that.images.push(response.data.url)
