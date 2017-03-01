@@ -108,7 +108,7 @@ export default {
         content1 += '<img src="' + this.images[i] + '" >'
       }
       if (this.video !== null) {
-        content1 += '<video style="width:50%;" controls="controls" src="' + this.video + '" ></video>'
+        content1 += '<video style="width:90%;" controls="controls" src="' + this.video + '" ></video>'
       }
       axios.post(this.jokeurl, {
         content: content1

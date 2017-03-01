@@ -97,6 +97,7 @@ export default {
 }
 </script>
 <style>
-div > img {width:50%;}
+div > img {width:90%;}
+div > video {width:90%}
 a {text-decoration:none;}
 </style>
