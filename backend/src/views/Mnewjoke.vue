@@ -25,7 +25,7 @@
                             </ul>
                             
                             <ul class="weui-uploader__files" id="uploaderFiles" v-if="video">
-                                <li class="weui-uploader__file"><video style="width:77px;height:77px;" v-bind:src='video'></li>
+                                <li class="weui-uploader__file"><video style="width:77px;height:77px;" v-bind:src='video'></video></li>
                             </ul>
                             <form enctype="multipart/form-data" method="POST" lang="zh-cn" id="uploadfile">
                             <div class="weui-uploader__input-box">
@@ -108,7 +108,7 @@ export default {
         content1 += '<img src="' + this.images[i] + '" >'
       }
       if (this.video !== null) {
-        content1 += '<video style="max-width:400px;" controls="controls" src="' + this.video + '" >'
+        content1 += '<video style="max-width:400px;" controls="controls" src="' + this.video + '" ></video>'
       }
       axios.post(this.jokeurl, {
         content: content1
