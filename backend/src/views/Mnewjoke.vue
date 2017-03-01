@@ -9,20 +9,23 @@
                 </div>
             </div>
 
-      </div>
-
-
-     <div class="weui-cells weui-cells_form">
-        <div class="weui-cell">
+           <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <div class="weui-uploader">
                         <div class="weui-uploader__hd">
-                            <p class="weui-uploader__title">图片上传</p>
+                            <select class="weui-select" name="select2" id="select2" @change="selected">
+                             <option value="1">图片上传 > </option>
+                             <option value="2">视频上传 > </option>
+                            </select>
                             <div class="weui-uploader__info">{{done}}/{{total}}</div>
                         </div>
                         <div class="weui-uploader__bd">
                             <ul class="weui-uploader__files" id="uploaderFiles" v-for="m in images">
                                 <li class="weui-uploader__file" v-bind:style="'background-image:url('+m+')'"></li>
+                            </ul>
+                            
+                            <ul class="weui-uploader__files" id="uploaderFiles" v-if="video">
+                                <li class="weui-uploader__file"><video style="width:77px;height:77px;" v-bind:src='video'></li>
                             </ul>
                             <form enctype="multipart/form-data" method="POST" lang="zh-cn" id="uploadfile">
                             <div class="weui-uploader__input-box">
@@ -34,7 +37,7 @@
                 </div>
             </div>
 
-      </div>
+      </div> <!-- weui-cells_form -->
 
      <div class="weui-btn-area">
             <a class="weui-btn weui-btn_primary" @click="send" id="showTooltips">确定</a>
@@ -51,6 +54,7 @@ export default {
   data () {
     return {
       images: [],
+      video: null,
       total: 0,
       done: 0,
       uploadurl: '/uploader/uploadimage?responseType=json',
@@ -61,8 +65,22 @@ export default {
   },
 
   methods: {
+    selected () {
+      /* eslint-disable */
+      var s = $("#select2").val()
+      var input1 = $("#uploaderInput")
+      /* eslint-enable */
+      if (s === '1') {
+        input1.attr('accept', 'image/*')
+      } else {
+        input1.attr('accept', 'video/*')
+      }
+    },
     Onchange () {
       /* eslint-disable */
+      // Don't select another...
+      document.getElementById("select2").disabled=true;
+      var s = $("#select2").val()
       var formElement = document.querySelector("#uploadfile");
       var formData = new FormData(formElement);
       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
@@ -72,7 +90,11 @@ export default {
         .then(function (response) {
           console.log(response.data)
           that.done += 1
-          that.images.push(response.data.url)
+          if (s === '1') {
+            that.images.push(response.data.url)
+          } else if(s === '2') {
+            that.video = response.data.url
+          }
         })
       /* eslint-enable */
     },
@@ -84,6 +106,9 @@ export default {
       var i
       for (i = 0; i < this.images.length; i++) {
         content1 += '<img src="' + this.images[i] + '" >'
+      }
+      if (this.video !== null) {
+        content1 += '<video style="max-width:400px;" controls="controls" src="' + this.video + '" >'
       }
       axios.post(this.jokeurl, {
         content: content1
