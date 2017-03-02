@@ -14,7 +14,7 @@
            </div>
            <div class="weui-cell">
                 <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-                    <img v-bind:src="userinfo.avatar||'/static/default-img.png'" style="width: 50px;display: block">
+                    <img v-bind:src="userinfo.avatar||'/static/default-img.png'" style="width: 50px;display: block" @click="crop">
                 </div>
                 <div class="weui-cell__bd">
                     <p>{{userinfo.username}}</p>
@@ -53,6 +53,9 @@ export default {
   },
 
   methods: {
+    crop () {
+      this.$router.push('/m/crop')
+    },
     getMy () {
       var that = this
       axios.get(this.userurl)
