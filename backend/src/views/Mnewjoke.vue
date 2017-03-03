@@ -111,6 +111,8 @@ export default {
     send () {
       /* eslint-disable */
       var content1 = $('#content').val();
+      var reg=new RegExp("\n","g")
+      content1 = content1.replace(reg,'</p>')
       /* eslint-enable */
       var that = this
       var i

@@ -15,7 +15,7 @@
                 <p class="weui-media-box__desc">
                    <article class="weui-article" style="padding-left:0px;">
                      <section>
-                       <div v-html="j.content"> </div>
+                       <div v-html="j.content" style="white-space:pre-wrap"> </div>
                      </section>
                    </article>
                 </p>
