@@ -26,8 +26,8 @@
 
 
   <div class="weui-form-preview__ft">
-    <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='joke(j,1)'><font><font>乐 {{j.joke}}</font></font></button>
-    <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='joke(j,0)'><font><font>冷 {{j.unjoke}}</font></font></button>
+    <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='joke(j,1)'><font><font><img  style="width:24px;" src="/static/joke.png"> {{j.joke}}</font></font></button>
+    <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='joke(j,0)'><font><font><img style="width:24px;" src="/static/unjoke.png"> {{j.unjoke}}</font></font></button>
   </div>
  
   </div>
@@ -39,19 +39,20 @@
                 <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
                     <span style="display: inline-block;position: relative;">
                         <img src="/static/icon_tabbar.png" alt="" class="weui-tabbar__icon">
-                        <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
                     </span>
                     <p class="weui-tabbar__label">微信</p>
                 </a>
                 <a href="javascript:;" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="/static/icon_tabbar.png" alt="" class="weui-tabbar__icon">
-                        <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
                     </span>
                     <p class="weui-tabbar__label">发现</p>
                 </a>
                 <a href="http://my.jsjoke.net/m" class="weui-tabbar__item">
-                    <img src="/static/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                    <span style="display: inline-block;position: relative;">
+                     <img src="/static/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                     <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
+                    </span>
                     <p class="weui-tabbar__label">我</p>
                 </a>
             </div>

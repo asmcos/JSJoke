@@ -1,14 +1,14 @@
 <template>
 <div class="page preview js_show" style="background-color:#eee">
        <div class="weui-cells">
-           <div class="page__bd page__bd_spacing" style="background-color:#3c3c3c;height:60px;">
+           <div class="page__bd page__bd_spacing" style="height:60px;">
                   <div class="weui-flex js_category">
                     <a href="http://jsjoke.net/m"> 
-                     <p class="weui-flex__item" style="color:#ddd;margin:15px;"> < </p>
+                     <p class="weui-flex__item" style="margin:15px;"> < </p>
                     </a>
-                    <p class="weui-flex__item" style="color:#ddd;margin:15px;">笑话圈</p>
+                    <p class="weui-flex__item" style="margin:15px;"></p>
                     <a href="/m/newjoke">
-                     <img src="/static/camera.png" style="width:40px;height:30px;margin:15px;" alt="">
+                     <img src="/static/camera.png" style="width:40px;margin:15px;" alt="">
                     </a>
                 </div>
            </div>
