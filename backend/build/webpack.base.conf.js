@@ -14,7 +14,7 @@ module.exports = {
     mapp: './backend/src/m.js'
   },
   output: {
-    path: config.build.assetsRoot,
+    path: config.build.bassetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath

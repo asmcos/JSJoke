@@ -8,13 +8,15 @@ var path = require('path')
 var chalk = require('chalk')
 var shell = require('shelljs')
 var webpack = require('webpack')
-var config = require('../backend/config')
+var config = require('../../config')
 var webpackConfig = require('./webpack.prod.conf')
 
 var spinner = ora('building for production...')
 spinner.start()
 
-var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
+var assetsPath = path.join(config.build.bassetsRoot, config.build.assetsSubDirectory)
+
+console.log(assetsPath)
 shell.rm('-rf', assetsPath)
 shell.mkdir('-p', assetsPath)
 shell.config.silent = true

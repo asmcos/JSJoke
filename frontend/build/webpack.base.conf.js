@@ -13,7 +13,7 @@ module.exports = {
     mapp: './frontend/src/m.js'
   },
   output: {
-    path: config.build.assetsRoot,
+    path: config.build.fassetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath

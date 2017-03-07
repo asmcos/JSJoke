@@ -17,6 +17,14 @@ require('../models/user')(app) //user register , login
 require('../models/restful')(app) // connect mongodb jsjoke
 require('../common/uploadimage')(app) //upload image
 
+app.get(["/"],function (req,res){
+  if(req.isAuthenticated()){
+    res.sendFile(path.resolve(__dirname, '../src/index.html'));
+  }
+  else {
+    res.redirect('/admin/login');
+  }
+})
 
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
@@ -64,7 +72,7 @@ app.get(['/admin/login'],function (req,res){
     res.sendFile(path.resolve(__dirname, '../src/login.html'));
 })
 
-app.get(["/admin/*","/"],function (req,res){
+app.get(["/admin/*"],function (req,res){
   if(req.isAuthenticated()){
     res.sendFile(path.resolve(__dirname, '../src/index.html'));
   }
