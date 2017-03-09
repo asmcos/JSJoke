@@ -62,6 +62,7 @@ var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsS
 app.use(staticPath, express.static('./static'))
 app.use(express.static(path.resolve(__dirname,'../dist')));
 app.use(express.static(path.resolve(__dirname,'../../third/ckeditor')));
+app.use(express.static(path.resolve(__dirname,'../../third')));
 app.use(express.static(path.resolve(__dirname,'../../uploads')));
 
 app.get(['/admin/register'],function (req,res){

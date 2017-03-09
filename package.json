@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "node backend/build/dev-server.js",
-    "build": "node backend/build/build.js",
+    "build": "node backend/build/build.js ; node frontend/build/build.js",
     "start": "forever start backend/build/dev-server.js;forever start frontend/build/dev-server.js",
     "stop": "forever stop backend/build/dev-server.js;forever stop frontend/build/dev-server.js",
     "restart": "forever restart backend/build/dev-server.js;forever restart frontend/build/dev-server.js",

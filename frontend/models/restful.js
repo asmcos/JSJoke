@@ -18,11 +18,13 @@ module.exports = function (app){
     pv: Number,
     joke: Number,
     unjoke: Number,
-    author  : [ {type : mongoose.Schema.ObjectId, ref : 'accounts'} ],
+    published: Number, // 1 ,show. 0. hide
+    comments: [{type : mongoose.Schema.ObjectId, ref : 'comments'}], // 1 ,show. 0. hide
+    author  : [{type : mongoose.Schema.ObjectId, ref : 'accounts'}],
   }))
   .methods(['get']);
    
-   var accounts = restful.model(
+  var accounts = restful.model(
     'accounts',mongoose.Schema({
     nickname: String,
     avatar: String,  //image url
@@ -30,10 +32,21 @@ module.exports = function (app){
     level: Number
   }));
 
+  var comments = restful.model(
+    'comments',mongoose.Schema({
+    content : String,
+    createdate: Date,
+    author  : {type : mongoose.Schema.ObjectId, ref : 'accounts'},
+    joke    : {type : mongoose.Schema.ObjectId, ref : 'jokes'},
+  }))
+ 
   app.get('/jokes' ,function (req,res){
 		Jokes.find()
          .sort('-_id')
          .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
+         .populate({ path: 'comments',
+                     options: {sort: {'_id': -1 }}, 
+                     populate: {path: 'author', select: {'nickname':1,'username':1}}})
     		 .exec(function (err, jokes) {
       		 if (err) return handleError(err);
 					 res.json(jokes)

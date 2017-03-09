@@ -19,9 +19,27 @@ module.exports = function (app){
     joke: Number,
     unjoke: Number,
     published: Number, // 1 ,show. 0. hide
-    author  : [ {type : mongoose.Schema.ObjectId, ref : 'accounts'} ],
+    comments: [{type : mongoose.Schema.ObjectId, ref : 'comments'}], // 1 ,show. 0. hide
+    author  : [{type : mongoose.Schema.ObjectId, ref : 'accounts'}],
   }))
   .methods(['get','post','put','delete']);
+
+  var accounts = restful.model(
+    'accounts',mongoose.Schema({
+    nickname: String,
+    avatar: String,  //image url
+    createdate: Date,
+    level: Number
+  }));
+
+  var comments = restful.model(
+    'comments',mongoose.Schema({
+    content : String,
+    createdate: Date,
+    author  : {type : mongoose.Schema.ObjectId, ref : 'accounts'},
+    joke    : {type : mongoose.Schema.ObjectId, ref : 'jokes'},
+  }))
+  .methods(['post']);
 
   Jokes.after('get', function(req, res, next) {
     if (req.params.id){
@@ -29,7 +47,7 @@ module.exports = function (app){
         res.locals.bundle.pv = pv
         Jokes.update({_id:req.params.id},{pv:pv},function(err, count, resp) {
         });
-    }  
+    }
     next();
   })
 
@@ -71,13 +89,49 @@ module.exports = function (app){
 
 	Jokes.register(app,'/jokes')
 
+  comments.before('post', function(req, res, next) {
+    if(req.isAuthenticated()){
+      req.body['createdate'] = new Date()
+      req.body['author'] = req.user._id
+      req.body['joke'] = req.query.id
+      next();
+    } else {
+      res.sendStatus(403);
+    }
+  })
+
+  comments.after('post', function(req, res, next) {
+    if(req.isAuthenticated()){ 
+      
+      Jokes.findOneAndUpdate({_id:req.query.id},
+                           {$push: { comments: res.locals.bundle._id} },function(err, count, resp){
+            });
+      next();
+    } else {
+      res.sendStatus(403);
+    }
+  })
+
+  app.get('/comments' ,function (req,res){
+    var jokeid = req.query.jokeid
+    comments.find({joke:jokeid})
+         .sort('-_id')
+         .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
+         .exec(function (err, comments) {
+           if (err) return handleError(err);
+           res.json(comments)
+         })
+   })
+
+	comments.register(app,'/comments')
+
   // collection 2,
   var UploadImg = app.images = restful.model(
 		'uploadimg', mongoose.Schema({
     url: String,
     createdate :Date,
   }))
-  .methods(['get','post','put','delete']);
+  .methods(['get','post']);
 
 	UploadImg.register(app,'/images')
 
