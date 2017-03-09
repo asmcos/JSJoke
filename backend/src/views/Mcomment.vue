@@ -15,9 +15,9 @@
            </div>
   <div class="weui-panel weui-panel_access">
     <div class="weui-panel__bd">
-        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="align-items:flex-start;">
-            <div class="weui-media-box__hd">
-                <img class="weui-media-box__thumb" v-bind:src="joke.author[0].avatar||'/static/default-img.png'" alt=""> 
+        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="align-items:flex-start;padding:8px;">
+            <div class="weui-media-box__hd" style="width:40px;height:40px;">
+                <img class="weui-media-box__thumb" v-bind:src="joke.author[0].avatar||'/static/default-img.png'" alt="" style="width:40px;height:40px;"> 
             </div>
             <div class="weui-media-box__bd">
                 <h4 class="weui-media-box__title">{{joke.author[0].nickname||joke.author[0].username}}</h4>
