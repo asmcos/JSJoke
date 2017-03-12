@@ -45,7 +45,7 @@ module.exports = function (app){
          .sort('-_id')
          .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
          .populate({ path: 'comments',
-                     options: {sort: {'_id': -1 }}, 
+                     // options: {sort: {'_id': -1 }}, 
                      populate: {path: 'author', select: {'nickname':1,'username':1}}})
     		 .exec(function (err, jokes) {
       		 if (err) return handleError(err);

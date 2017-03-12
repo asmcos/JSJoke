@@ -115,7 +115,7 @@ module.exports = function (app){
   app.get('/comments' ,function (req,res){
     var jokeid = req.query.jokeid
     comments.find({joke:jokeid})
-         .sort('-_id')
+         // .sort('-_id')
          .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
          .exec(function (err, comments) {
            if (err) return handleError(err);
