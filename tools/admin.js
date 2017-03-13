@@ -22,7 +22,6 @@ function admin(user){
 		console.log(cursor)
   })
 
-
   accounts.findOneAndUpdate({"username":user},
                            {'admin':1},function(err, count, resp){
 													 db.disconnect()											

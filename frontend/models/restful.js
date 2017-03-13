@@ -53,11 +53,16 @@ module.exports = function (app){
          })
    })
    // get jokes end
+
+   // joke or unjoke
    app.get('/jokes/:id',function(req,res){
 
       Jokes.findOne({'_id': req.params['id']},function(err,j){
 			  if (req.query['joke']){
 				  j.joke = j.joke + 1
+
+          update_author_level(req.params['id']) // joke
+
           j.save(function(err,data){
 						res.json(data)
           })
@@ -73,6 +78,20 @@ module.exports = function (app){
       
       })
    })
+ 
+   /*****************************************************/
+   function update_author_level (id) {
+    Jokes.findOne({_id:id})
+       .populate('author')
+       .exec(function(error,cursor) {
+          var author = cursor.author[0]
+          accounts.update({_id:author._id},{level:author.level+1},function(e,a){
+          })
+        })
+   }
+
+
+
 
 }
 
