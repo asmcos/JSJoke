@@ -5,8 +5,8 @@ var mongoose = require('mongoose'),
 var Account = new Schema({
   nickname: String,
   avatar: String,  //image url
-  createdate: Date,
-  level: Number
+  createdate: {type:Date,default:Date.now},
+  level: {type:Number,default:0 },
 });
 
 Account.plugin(passportLocalMongoose);

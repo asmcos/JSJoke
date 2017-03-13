@@ -40,7 +40,15 @@
 
   </br>
  </div> <!--page__bd-->
-   <div style="height:30px;"></div>
+          <div class="weui-footer">
+            <p class="weui-footer__links">
+                <a href="http://github.com/asmcos/jsjoke" class="weui-footer__link">源代码</a>
+                <a href="" class="weui-footer__link">集思笑话</a>
+            </p>
+            <p class="weui-footer__text">Copyright © 2017-2017 jsjoke.net</p>
+        </div>
+
+   <div style="height:60px;"></div>
    <div class="weui-tab">
     <div class="weui-tabbar" style="position:fixed;">
                 <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">

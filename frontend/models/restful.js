@@ -14,11 +14,11 @@ module.exports = function (app){
 		'jokes', mongoose.Schema({
     title: String,
     content:String,
-    createdate :Date,
-    pv: Number,
-    joke: Number,
-    unjoke: Number,
-    published: Number, // 1 ,show. 0. hide
+    createdate :{type:Date, default:Date.now },
+    pv: {type:Number,default:0},
+    joke: {type:Number,default:0},
+    unjoke: {type:Number, default: 0},
+    published: {type :Number, default: 1},// 1 ,show. 0. hide
     comments: [{type : mongoose.Schema.ObjectId, ref : 'comments'}], // 1 ,show. 0. hide
     author  : [{type : mongoose.Schema.ObjectId, ref : 'accounts'}],
   }))
@@ -28,14 +28,14 @@ module.exports = function (app){
     'accounts',mongoose.Schema({
     nickname: String,
     avatar: String,  //image url
-    createdate: Date,
-    level: Number
+    createdate: {type:Date, default: Date.now },
+    level: {type:Number,default: 0 },
   }));
 
   var comments = restful.model(
     'comments',mongoose.Schema({
     content : String,
-    createdate: Date,
+    createdate: {type:Date, default: Date.now },
     author  : {type : mongoose.Schema.ObjectId, ref : 'accounts'},
     joke    : {type : mongoose.Schema.ObjectId, ref : 'jokes'},
   }))
