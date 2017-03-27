@@ -45,6 +45,7 @@
                 <a href="http://github.com/asmcos/jsjoke" class="weui-footer__link">源代码</a>
                 <a href="" class="weui-footer__link">集思笑话</a>
             </p>
+            <p class="weui-footer__text">京ICP备17016493号</p>
             <p class="weui-footer__text">Copyright © 2017-2017 jsjoke.net</p>
         </div>
 
