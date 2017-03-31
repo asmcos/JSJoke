@@ -4,6 +4,8 @@ var path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
+    wxindex: path.resolve(__dirname, '../wxapp/dist/index.html'),
+    wxassetsRoot: path.resolve(__dirname, '../wxapp/dist'),
     bindex: path.resolve(__dirname, '../backend/dist/index.html'),
     bassetsRoot: path.resolve(__dirname, '../backend/dist'),
     findex: path.resolve(__dirname, '../frontend/dist/index.html'),

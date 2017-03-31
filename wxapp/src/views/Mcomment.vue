@@ -4,7 +4,7 @@
  <div class="page__bd">
           <div class="page__bd page__bd_spacing" style="height:60px;">
                   <div class="weui-flex js_category">
-                    <a href="http://jsjoke.net/m">
+                    <a href="/">
                      <p class="weui-flex__item" style="margin:15px;"> < </p>
                     </a>
                     <p class="weui-flex__item" style="margin:15px;"></p>
@@ -71,8 +71,8 @@ export default {
       joke: null,
       jokeid: null,
       comments: {},
-      jokeurl: '/jokes',
-      commentsurl: '/comments'
+      jokeurl: '/api/jokes',
+      commentsurl: '/api/comments'
     }
   },
   created () {
@@ -84,10 +84,10 @@ export default {
     jokeclick (j, jo) {
       if (jo) {
         j.joke += 1
-        axios.get('http://jokes.net' + this.jokeurl + '/' + j._id + '?joke=1')
+        axios.get(this.jokeurl + '/' + j._id + '?joke=1')
       } else {
         j.unjoke += 1
-        axios.get('http://jokes.net' + this.jokeurl + '/' + j._id + '?unjoke=1')
+        axios.get(this.jokeurl + '/' + j._id + '?unjoke=1')
       }
     },
     send (j) {
