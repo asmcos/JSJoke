@@ -68,7 +68,7 @@ export default {
           password: password1
         })
           .then(function (response) {
-            that.$router.push('/m')
+            that.$router.push('/m/my')
           })
       } else if (select1 === '2') {
         axios.post(this.jokeregister, {
@@ -87,7 +87,7 @@ export default {
         password: p
       })
         .then(function (response) {
-          that.$router.push('/m')
+          that.$router.push('/m/my')
         })
     }
   },
