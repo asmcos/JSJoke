@@ -79,7 +79,7 @@ export default {
       axios.post(this.userurl, this.userinfo)
         .then(function (response) {
           alert("修改成功！")
-          that.$router.push("/m")
+          that.$router.push("/m/my")
         })
       /* eslint-enable */
     },
@@ -115,7 +115,7 @@ export default {
       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
       var that = this
       if (this.loadfile == 0) {
-          return that.$router.push('/m')
+          return that.$router.push('/m/my')
       }
       var param = ''
       var w = $('#preview').width()

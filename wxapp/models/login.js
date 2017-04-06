@@ -14,14 +14,14 @@ router.post('/register', function(req, res, next) {
     console.log('user registered!');
      //auto login
     passport.authenticate('local')(req, res, function () {
-             res.redirect('/');
+             res.redirect('/m/my');
     })
   });
 });
 
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-  res.redirect('/');
+  res.redirect('/m/my');
 });
 
 router.get('/logout', function(req, res) {
