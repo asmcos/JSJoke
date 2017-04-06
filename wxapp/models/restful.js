@@ -42,7 +42,19 @@ module.exports = function (app){
   .methods(['post']);
 
   app.get('/api/jokes' ,function (req,res){
+    var l = 0
+    var s = 0
+    if (req.query.limit){
+      l = req.query.limit
+    }
+
+    if (req.query.skip){
+      s = req.query.skip
+    }
+
     Jokes.find()
+         .limit(l)
+         .skip(s)
          .sort('-_id')
          .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
          .populate({ path: 'comments',
