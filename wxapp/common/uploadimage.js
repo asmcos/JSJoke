@@ -22,7 +22,7 @@ module.exports = function (app){
       if (err) {
         return res.end('failed')
       }
-      console.log(req.refilename)
+      // console.log(req.refilename)
       // app.images is mongodb collection
       // save the url info to images collection
       var ct = new Date()
@@ -30,7 +30,7 @@ module.exports = function (app){
 
       // return for ctrl+v , clipboard
       if (req.query['responseType'] == 'json'){
-            return res.json({"fileName":"image.png","uploaded":1,"url":"/"+req.refilename})
+            return res.json({"fileName":"image.png","uploaded":1,"url":req.headers.origin+ "/" +req.refilename})
       } else {
         // return for upload file by form submit   
         res.setHeader('Content-Type', 'text/html'); 
