@@ -44,7 +44,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      userurl: '/my',
+      userurl: '/api/my',
       userinfo: {avatar: '/static/default-img.png'},
       x: 0,
       y: 0,
