@@ -31,9 +31,8 @@ module.exports = function (app) {
   })); //passport.use
 
 
-  app.get('/api/weapplogin',passport.authenticate('weapp',function (req,res){
-    console.log(res)
+  app.get('/api/weapplogin',passport.authenticate('weapp'),function (req,res){
   	res.end("ok")
-  })) // app.get /api/weapplogin
+  }) // app.get /api/weapplogin
 
 }
