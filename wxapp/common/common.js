@@ -15,8 +15,8 @@ app.use(express.query());
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(methodOverride());
-app.use(session({keys: ['jsadmin1', 'jsadmin2', '...'],cookie:{maxAge:36000000000}}));
-// 10000 hour
+app.use(session({keys: ['jsadmin1', 'jsadmin2', '...'],cookie:{maxAge:3600000000}}));
+// 1000 hour
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

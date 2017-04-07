@@ -7,6 +7,7 @@ var Account = new Schema({
   avatar: String,  //image url
   createdate: {type:Date,default:Date.now},
   level: {type:Number,default:0 },
+  weappid: {type: String},
 });
 
 Account.plugin(passportLocalMongoose);

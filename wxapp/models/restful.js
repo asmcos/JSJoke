@@ -30,6 +30,7 @@ module.exports = function (app){
     avatar: String,  //image url
     createdate : { type:Date, default: Date.now },
     level: {type: Number,default: 0},
+    weappid: {type: String},
   }));
 
   var comments = restful.model(
@@ -70,27 +71,29 @@ module.exports = function (app){
    // joke or unjoke
    app.get('/api/jokes/:id',function(req,res){
 
-      Jokes.findOne({'_id': req.params['id']},function(err,j){
-        if (req.query['joke']){
-          j.joke = j.joke + 1
+      Jokes.findOne({'_id': req.params['id']})
+           .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
+           .exec(function(err,j){
+             if (req.query['joke']){
+               j.joke = j.joke + 1
 
-          update_author_level(req.params['id']) // joke
+               update_author_level(req.params['id']) // joke
 
-          j.save(function(err,data){
-            res.json(data)
-          })
-         } else if (req.query['unjoke']) {
+               j.save(function(err,data){
+                 res.json(data)
+               })
+             } else if (req.query['unjoke']) {
 
-          j.unjoke = j.unjoke + 1
-          j.save(function(err,data){
-            res.json(data)
-          })
-        } else {
-          res.json(j)
-        }
+               j.unjoke = j.unjoke + 1
+               j.save(function(err,data){
+                 res.json(data)
+               })
+             } else {
+               res.json(j)
+           }
 
-      })
-   })
+         }) //exec jokes find one
+   }) //app.get
 
    /*****************************************************/
    function update_author_level (id) {

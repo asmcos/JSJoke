@@ -16,6 +16,7 @@ require('../common/common')(app) //set app
 require('../models/user')(app) //user register , login 
 require('../models/restful')(app) // connect mongodb jsjoke
 require('../common/uploadimage')(app) //upload image
+require('../passport-weapp-mongoose/weapplogin')(app) //weixin app login
 
 app.get(["/",'/m'],function (req,res){
   res.sendFile(path.resolve(__dirname, '../src/m.html'));
