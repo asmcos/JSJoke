@@ -21,8 +21,6 @@ module.exports = function (app) {
 			  user.nickname = profile['nickName']
         user.avatar   = profile['avatarUrl']
 
-  			console.log(user)
- 
         user.save(function(err) {
            if (err) console.log(err);
               return done(err, user);
@@ -33,6 +31,9 @@ module.exports = function (app) {
   })); //passport.use
 
 
-  app.get('/api/weapplogin',passport.authenticate('weapp',{successRedirect: '/m/my'})) // app.get /api/weapplogin
+  app.get('/api/weapplogin',passport.authenticate('weapp',function (req,res){
+    console.log(res)
+  	res.end("ok")
+  })) // app.get /api/weapplogin
 
 }
