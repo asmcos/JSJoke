@@ -52,17 +52,17 @@
    <div style="height:60px;"></div>
    <div class="weui-tab">
     <div class="weui-tabbar" style="position:fixed;">
-                <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+                <a id="tabbar1" href="/" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="/static/icon_tabbar.png" alt="" class="weui-tabbar__icon">
                     </span>
-                    <p class="weui-tabbar__label">微信</p>
+                    <p class="weui-tabbar__label">Top20</p>
                 </a>
-                <a href="javascript:;" class="weui-tabbar__item">
+                <a id="tabbar2" href="/?limit=0" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="/static/icon_tabbar.png" alt="" class="weui-tabbar__icon">
                     </span>
-                    <p class="weui-tabbar__label">发现</p>
+                    <p class="weui-tabbar__label">更多</p>
                 </a>
                 <a href="/m/my" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
@@ -84,13 +84,22 @@ export default {
   data () {
     return {
       jokes: null,
+      count: 20,
       jokeurl: '/api/jokes'
     }
   },
   created () {
     this.getJokes()
   },
-
+  mounted () {
+    /* eslint-disable */
+    if (this.count == 0) {
+      $('#tabbar2').addClass('weui-bar__item_on')
+    } else {
+      $('#tabbar1').addClass('weui-bar__item_on')
+    }
+    /* eslint-enable */
+  },
   methods: {
     joke (j, jo) {
       if (jo) {
@@ -107,7 +116,11 @@ export default {
     },
     getJokes () {
       var that = this
-      axios.get(this.jokeurl + '?sort=-_id')
+
+      if (that.$route.query.limit) {
+        this.count = that.$route.query.limit
+      }
+      axios.get(this.jokeurl + '?limit=' + this.count)
         .then(function (response) {
           that.jokes = response.data
         })
