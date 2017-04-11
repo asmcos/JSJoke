@@ -30,7 +30,7 @@ module.exports = function (app){
 
       // return for ctrl+v , clipboard
       if (req.query['responseType'] == 'json'){
-            return res.json({"fileName":"image.png","uploaded":1,"url":req.headers.origin+ "/" +req.refilename})
+            return res.json({"fileName":"image.png","uploaded":1,"url":(req.headers.origin||'https://jsjoke.net')+ "/" +req.refilename})
       } else {
         // return for upload file by form submit   
         res.setHeader('Content-Type', 'text/html'); 
