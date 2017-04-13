@@ -12,6 +12,7 @@
            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <div class="weui-uploader">
+                         选择(图片/视频)
                         <div class="weui-uploader__hd">
                             <select class="weui-select" name="select2" id="select2" @change="selected">
                              <option value="1">图片上传 > </option>

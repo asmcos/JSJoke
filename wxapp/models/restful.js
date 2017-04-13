@@ -66,8 +66,26 @@ module.exports = function (app){
            res.json(jokes)
          })
    })
+ 
    // get jokes end
 
+   // get use own jokes
+   app.get('/api/my/jokes',function(req,res){
+     if(!req.isAuthenticated()){
+        return res.json({"err":"need login"})
+     } else {
+       Jokes.find({author:[req.user._id]})
+              .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
+              .populate({ path: 'comments',
+                     // options: {sort: {'_id': -1 }}, 
+                     populate: {path: 'author', select: {'nickname':1,'username':1}}})
+              .exec(function (err, jokes) {
+                if (err) return handleError(err);
+                res.json(jokes)
+              })
+     }
+   })
+ 
    // joke or unjoke
    app.get('/api/jokes/:id',function(req,res){
 
@@ -132,7 +150,16 @@ module.exports = function (app){
 
   Jokes.before('delete', function(req, res, next) {
     if(req.isAuthenticated()){
-      next();
+      
+      Jokes.findOne({'_id': req.params['id']})
+           .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
+           .exec(function(err,j){
+							if (j.author[0]._id == req.user._id.toString()){
+                next();
+              } else {
+								res.sendStatus(403)
+							}
+           })
     } else {
 			res.sendStatus(403);
     } 

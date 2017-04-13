@@ -1,4 +1,5 @@
 <template>
+
 <div class="page preview js_show" style="background-color:#eee">
        <div class="weui-cells">
            <div class="page__bd page__bd_spacing" style="height:60px;">
@@ -34,6 +35,54 @@
             </div>
        </div>
  
+<!-- my jokes --> 
+   <div class="page__hd">
+        <p class="page__desc" style="padding:60px;">我的所有笑话</p>
+    </div>
+ <div class="page__bd" v-for="j in jokes">
+  <div class="weui-panel weui-panel_access">
+    <div class="weui-panel__bd">
+        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="align-items:flex-start;padding:8px;">
+            <div class="weui-media-box__hd" style="width:40px;height:40px;">
+                <img class="weui-media-box__thumb" v-bind:src="j.author[0].avatar||'/static/default-img.png'" alt="" style="width:40px;height:40px;">
+            </div>
+            <div class="weui-media-box__bd">
+                <h4 class="weui-media-box__title">{{j.author[0].nickname||j.author[0].username}}</h4>
+
+                <p class="weui-media-box__desc">{{j.createdate | getYMD }}</p>
+                <p class="weui-media-box__desc">
+                   <article class="weui-article" style="padding-left:0px;">
+                     <section>
+                       <div v-html="j.content" style="white-space:pre-wrap"> </div>
+
+                       <div class="weui-form-preview__ft">
+                          <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='joke(j,1)'><font><font><img  style="width:24px;" src="/static/joke.png"> {{j.joke}}</font></font></button>
+                          <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='comment(j)'><font><font><img  style="width:24px;" src="/static/comment.png"> {{j.comment}}</font></font></button>
+                          <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='joke(j,0)'><font><font><img style="width:24px;" src="/static/unjoke.png"> {{j.unjoke}}</font></font></button>
+                       </div>
+
+                       <template v-for="(c,index) in j.comments" >
+                        <div class="triangle-up" style="margin-left:15px;" v-if="index===0"></div>
+                        <div class="comment" > <font class="comment_name">{{c.author.nickname||c.author.username}}:</font><font class="comment_content">{{c.content}}</font></div>
+                       </template>
+                     </section>
+                   </article>
+                </p>
+            </div>
+         <img src="/static/del.png" style="width:24px;height:24px;" @click='del(j)'></img>
+        </a>
+     </div>
+
+
+  </div>
+
+  </br>
+ </div> <!--page__bd-->
+
+
+
+  <!-- end jokes -->
+  
 </div>
 </template>
 
@@ -44,15 +93,37 @@ export default {
   data () {
     return {
       userinfo: {},
+      jokes: [],
       userurl: '/api/my',
-      jokeurl: '/api/jokes'
+      jokeurl: '/api/my/jokes'
     }
   },
   created () {
     this.getMy()
+    this.getJokes()
   },
 
   methods: {
+    joke (j, jo) {
+      if (jo) {
+        j.joke += 1
+        axios.get(this.jokeurl + '/' + j._id + '?joke=1')
+      } else {
+        j.unjoke += 1
+        axios.get(this.jokeurl + '/' + j._id + '?unjoke=1')
+      }
+    },
+    comment (j) {
+      var url = '/m/comment?jokeid=' + j._id
+      window.location.href = url
+    },
+    del (j) {
+      var that = this
+      axios.delete('/api/jokes' + '/' + j._id)
+           .then(function (response) {
+             that.getJokes()
+           })
+    },
     crop () {
       this.$router.push('/m/crop')
     },
@@ -83,9 +154,11 @@ export default {
     },
     getJokes () {
       var that = this
-      axios.get(this.jokeurl + '?sort=-_id')
+      axios.get(this.jokeurl)
         .then(function (response) {
-          that.jokes = response.data
+          if (!response.data.err) {
+            that.jokes = response.data
+          }
         })
     }
   },

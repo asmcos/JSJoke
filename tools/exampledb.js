@@ -39,15 +39,16 @@ function init( ){
   }));
 
 
-
-  Jokes.find(function(error,cursor){
-		//console.log(cursor)
+  accounts.findOne({username:'asmcos'},function(e,cursor){
+   console.log(cursor)
+   Jokes.find({author:[cursor._id]},function(error,cursor){
+		 console.log(cursor)
+   })
   })
-
   // db.disconnect()					
 						
   // _id: 58b8c266947f354558a7b5da
- 
+  /*
   Jokes.findOne({_id:'58b8c266947f354558a7b5da'})
        .populate('author')
        .exec(function(error,cursor) {
@@ -57,7 +58,7 @@ function init( ){
            db.disconnect()					
           })
         })
-  
+  */
 }
 
 init ( )
