@@ -75,6 +75,7 @@ module.exports = function (app){
         return res.json({"err":"need login"})
      } else {
        Jokes.find({author:[req.user._id]})
+              .sort('-_id')
               .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
               .populate({ path: 'comments',
                      // options: {sort: {'_id': -1 }}, 
