@@ -3,6 +3,9 @@ var mong = require('mongoose')
 
 // app.jokes, /jokes
 // app.images,/images
+var LEVEL_JOKE = 1;
+var LEVEL_COMMENT = 10;
+
 
 module.exports = function (app){
 	var mongoose = restful.mongoose
@@ -96,7 +99,7 @@ module.exports = function (app){
              if (req.query['joke']){
                j.joke = j.joke + 1
 
-               update_author_level(req.params['id']) // joke
+               update_author_level(req.params['id'], LEVEL_JOKE) // joke
 
                j.save(function(err,data){
                  res.json(data)
@@ -115,12 +118,13 @@ module.exports = function (app){
    }) //app.get
 
    /*****************************************************/
-   function update_author_level (id) {
+   // id is jokeid ,val is + level value 
+   function update_author_level (id,val) {
     Jokes.findOne({_id:id})
        .populate('author')
        .exec(function(error,cursor) {
           var author = cursor.author[0]
-          accounts.update({_id:author._id},{level:author.level+1},function(e,a){
+          accounts.update({_id:author._id},{level:author.level+val},function(e,a){
           })
         })
    }
@@ -173,6 +177,7 @@ module.exports = function (app){
       req.body['createdate'] = new Date()
       req.body['author'] = req.user._id
       req.body['joke'] = req.query.id
+      update_author_level(req.query.id,LEVEL_COMMENT) // joke
       next();
     } else {
       res.sendStatus(403);
@@ -198,6 +203,7 @@ module.exports = function (app){
          .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
          .exec(function (err, comments) {
            if (err) return handleError(err);
+           
            res.json(comments)
          })
    })
