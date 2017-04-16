@@ -19,11 +19,11 @@ function auth_weapp (code,iv,encryptedData,callback){
       body += d
    })
    res.on('end',function (){
-
+    console.log('body:',body)
     // get sessionkey
     sessionKey = JSON.parse(body).session_key
 
-    console.log(sessionKey)
+    console.log('sessionKey:',sessionKey)
 
     var pc = new WXBizDataCrypt(appId, sessionKey)
     var data = pc.decryptData(encryptedData , iv)
