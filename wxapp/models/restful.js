@@ -4,8 +4,9 @@ var mong = require('mongoose')
 // app.jokes, /jokes
 // app.images,/images
 var LEVEL_JOKE = 1;
-var LEVEL_COMMENT = 10;
-
+var LEVEL_COMMENT = 2;
+var LEVEL_POST = 5;
+var LEVEL_SHARE = 10;
 
 module.exports = function (app){
 	var mongoose = restful.mongoose
@@ -128,7 +129,15 @@ module.exports = function (app){
           })
         })
    }
-
+   /*****************************************************/
+   // req ,val is + level value 
+   function update_accounts_level (req,val,cb) {
+      accounts.update({_id:req.user._id},{$inc:{level:val}},function(e,a){
+				if (cb){
+					cb()
+				}
+			})
+   }
 
   Jokes.before('post', function(req, res, next) {
     if(req.isAuthenticated()){
@@ -138,6 +147,7 @@ module.exports = function (app){
       req.body['unjoke'] = 0
       req.body['published'] = 0
       req.body['author'] = req.user._id
+      update_accounts_level(req,LEVEL_POST)
       next();
     } else {
 			res.sendStatus(403);
@@ -209,6 +219,14 @@ module.exports = function (app){
    })
 
 	comments.register(app,'/api/comments')
+
+
+  // share success update level
+  app.post('/api/share',function(req,res){
+      update_accounts_level(req,LEVEL_SHARE,function(){
+				res.json({'result':'ok'})
+			})
+	})
 
   // collection 2,
   var UploadImg = app.images = restful.model(

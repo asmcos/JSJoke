@@ -34,7 +34,7 @@ function user(  ){
 
 	accounts.find({},function(err,cursor){
 					for (var c in cursor) {
-						console.log(c,cursor[c].nickname||cursor[c].username)
+						console.log(c,cursor[c].nickname||cursor[c].username,cursor[c].level)
 					}
            db.disconnect()					
 	})
