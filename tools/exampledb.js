@@ -38,27 +38,41 @@ function init( ){
     author  : [{type : mongoose.Schema.ObjectId, ref : 'accounts'}],
   }));
 
-
+  /*
   accounts.findOne({username:'asmcos'},function(e,cursor){
    console.log(cursor)
    Jokes.find({author:[cursor._id]},function(error,cursor){
 		 console.log(cursor)
    })
   })
+	*/
   // db.disconnect()					
 						
   // _id: 58b8c266947f354558a7b5da
-  /*
-  Jokes.findOne({_id:'58b8c266947f354558a7b5da'})
+  
+  Jokes.find({},{comments:1})
        .populate('author')
        .exec(function(error,cursor) {
-		      console.log(cursor.author[0])
-          var author = cursor.author[0]
-          accounts.update({_id:author._id},{level:author.level+1},function(e,a){
+					/*for (var i in cursor){
+						if (cursor[i].comments){
+		      		console.log(i,cursor[i])
+						 }
+          }*/
+					for (var i in cursor){
+						//if (cursor[i].comments){
+							//console.log(cursor[i])
+							if (cursor[i].comments) {
+								console.log("-----------------------")
+							}
+						
+						//}
+          }
+          //var author = cursor.author[0]
+          //accounts.update({_id:author._id},{level:author.level+1},function(e,a){
            db.disconnect()					
-          })
+          //})
         })
-  */
+  
 }
 
 init ( )

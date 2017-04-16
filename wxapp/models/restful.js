@@ -56,7 +56,7 @@ module.exports = function (app){
       s = req.query.skip
     }
 
-    Jokes.find()
+    Jokes.find({}/*,{comments:0}*/)
          .limit(l)
          .skip(s)
          .sort('-_id')
@@ -77,7 +77,7 @@ module.exports = function (app){
      if(!req.isAuthenticated()){
         return res.json({"err":"need login"})
      } else {
-       Jokes.find({author:[req.user._id]})
+       Jokes.find({author:[req.user._id]}/*,{comments:0}*/)
               .sort('-_id')
               .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
               .populate({ path: 'comments',

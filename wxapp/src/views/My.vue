@@ -54,7 +54,7 @@
                    <article class="weui-article" style="padding-left:0px;">
                      <section>
                        <div v-html="j.content" style="white-space:pre-wrap"> </div>
-
+											 <template v-if="j.comments">
                        <div class="weui-form-preview__ft">
                           <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='joke(j,1)'><font><font><img  style="width:24px;" src="/static/joke.png"> {{j.joke}}</font></font></button>
                           <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='comment(j)'><font><font><img  style="width:24px;" src="/static/comment.png"> {{j.comment}}</font></font></button>
@@ -65,6 +65,7 @@
                         <div class="triangle-up" style="margin-left:15px;" v-if="index===0"></div>
                         <div class="comment" > <font class="comment_name">{{c.author.nickname||c.author.username}}:</font><font class="comment_content">{{c.content}}</font></div>
                        </template>
+                       </template> <!--v-if j.comments-->
                      </section>
                    </article>
                 </p>
