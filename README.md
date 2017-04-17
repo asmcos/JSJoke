@@ -1,6 +1,14 @@
 # jsjoke
 
-> A Vue.js project
+
+#本代码 需要用到mongodb
+请先安装 mongodb server
+
+# 源代码 在wxapp 目录
+
+# 启动后占用 9090 端口
+
+
 
 ## Build Setup
 
@@ -8,23 +16,14 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
 
 # build for production with minification
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
+# run server
+npm run start
 
-# run unit tests
-npm run unit
 
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
