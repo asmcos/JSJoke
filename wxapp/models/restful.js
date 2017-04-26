@@ -57,6 +57,7 @@ module.exports = function (app){
       s = req.query.skip
     }
 
+    // Jokes.find({} ,{comments:0}) //审核
     Jokes.find({}/*,{comments:0}*/)
          .limit(l)
          .skip(s)
@@ -78,6 +79,7 @@ module.exports = function (app){
      if(!req.isAuthenticated()){
         return res.json({"err":"need login"})
      } else {
+       // Jokes.find({author:[req.user._id]} ,{comments:0} ) // 审核 
        Jokes.find({author:[req.user._id]}/*,{comments:0}*/)
               .sort('-_id')
               .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
@@ -164,7 +166,10 @@ module.exports = function (app){
   })
 
   Jokes.before('delete', function(req, res, next) {
-    if(req.isAuthenticated()){
+    var user = req.user.toJSON()
+    if (req.isAuthenticated() && (user.admin==1)){
+		  next();	
+    } else if(req.isAuthenticated()){
       
       Jokes.findOne({'_id': req.params['id']})
            .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
