@@ -79,10 +79,17 @@
 
   </br>
  </div> <!--page__bd-->
-
-
-
   <!-- end jokes -->
+
+    <div class="weui-tab" v-if="userinfo.admin">
+    <div class="weui-tabbar" style="position:fixed;">
+      <div class="weui-cell__bd">
+       <input class="weui-input" style="margin:8px;" type="text" id="deljokeid" placeholder="...">
+      </div>
+      <button class="weui-btn weui-btn_primary" style="width:80px;" @click="admindel">删除</button>
+    </div>
+  </div> <!-- weui-tab -->
+
   
 </div>
 </template>
@@ -124,6 +131,16 @@ export default {
            .then(function (response) {
              that.getJokes()
            })
+    },
+    admindel () {
+      /* eslint-disable */
+      var jokeid = $('#deljokeid').val();
+      /* eslint-enable */
+      var that = this
+      axios.delete('/api/jokes' + '/' + jokeid)
+        .then(function (response) {
+          that.$router.push('/m')
+        })
     },
     crop () {
       this.$router.push('/m/crop')
