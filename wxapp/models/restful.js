@@ -185,7 +185,24 @@ module.exports = function (app){
     } 
   })
 
+
 	Jokes.register(app,'/api/jokes')
+
+
+  // get user sort
+  app.get('/api/userlevel',function(req,res){
+    var l = 0
+    if (req.query.limit){
+      l = req.query.limit
+    }
+
+		accounts.find( { level:{ $gt: 0 } } ,{salt:0,hash:0,weappid:0})
+					 .sort( { level:-1 } )
+		       .limit( l )			 
+					 .exec(function(err,cursor){
+							res.json(cursor)
+           })
+  })
 
   comments.before('post', function(req, res, next) {
     if(req.isAuthenticated()){
