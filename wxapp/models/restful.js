@@ -79,9 +79,21 @@ module.exports = function (app){
      if(!req.isAuthenticated()){
         return res.json({"err":"need login"})
      } else {
+	     var l = 0
+  	   var s = 0
+    	 if (req.query.limit){
+      	 l = req.query.limit
+    	 }
+
+    	 if (req.query.skip){
+      	 s = req.query.skip
+    	 }
+
        // Jokes.find({author:[req.user._id]} ,{comments:0} ) // 审核 
        Jokes.find({author:[req.user._id]}/*,{comments:0}*/)
               .sort('-_id')
+							.limit(l)
+							.skip(s)
               .populate({ path: 'author', select: {'avatar':1,'nickname':1,'level':1,'username':1} })
               .populate({ path: 'comments',
                      // options: {sort: {'_id': -1 }}, 
