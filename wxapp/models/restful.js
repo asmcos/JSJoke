@@ -75,7 +75,7 @@ module.exports = function (app){
     	var videoquery = {}
 		}
 
-    // Jokes.find({} ,{comments:0}) //审核
+    // Jokes.find( videoquery ,{comments:0}) //审核
     Jokes.find( videoquery/*,{comments:0}*/)
          .limit(l)
          .skip(s)
