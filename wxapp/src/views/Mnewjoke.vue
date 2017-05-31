@@ -121,14 +121,21 @@ export default {
         content1 += '<img src="' + this.images[i] + '" >'
       }
       if (this.video !== null) {
-        content1 += '<video style="width:90%;" controls="controls" src="' + this.video + '" ></video>'
-      }
-      axios.post(this.jokeurl, {
-        content: content1
-      })
-        .then(function (response) {
-          that.$router.push('/')
+        axios.post(this.jokeurl, {
+          content: content1,
+          videourl: this.video
         })
+          .then(function (response) {
+            that.$router.push('/')
+          })
+      } else {
+        axios.post(this.jokeurl, {
+          content: content1
+        })
+          .then(function (response) {
+            that.$router.push('/')
+          })
+      }
     }
   },
   components: {

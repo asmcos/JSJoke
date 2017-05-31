@@ -18,6 +18,7 @@ module.exports = function (app){
 		'jokes', mongoose.Schema({
     title: String,
     content: String,
+		videourl: String,
     createdate : { type:Date, default: Date.now },
     pv: { type:Number, default: 0 },
     joke: {type:Number, default: 0 },
@@ -49,6 +50,8 @@ module.exports = function (app){
   app.get('/api/jokes' ,function (req,res){
     var l = 0
     var s = 0
+    var video = 0 // 0: haven't video ,1:only video , 2: all
+
     if (req.query.limit){
       l = req.query.limit
     }
@@ -57,8 +60,23 @@ module.exports = function (app){
       s = req.query.skip
     }
 
+    if (req.query.video){
+      video = req.query.video
+    }
+
+    // default ,haven't video
+		var	videoquery = {"videourl":null} 
+
+    if (video == 1){
+			videoquery = {"videourl":{$ne:null}}  // 1,only video
+    }
+
+		if (video == 2){
+    	var videoquery = {}
+		}
+
     // Jokes.find({} ,{comments:0}) //审核
-    Jokes.find({}/*,{comments:0}*/)
+    Jokes.find( videoquery/*,{comments:0}*/)
          .limit(l)
          .skip(s)
          .sort('-_id')
