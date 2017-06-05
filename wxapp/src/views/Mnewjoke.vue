@@ -97,7 +97,11 @@ export default {
       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
       var that = this
       this.total += 1
-      axios.post(this.uploadurl, formData, config)
+      var isVideo = ""
+      if (s === '2'){
+           isVideo = '&video=1'
+      }
+      axios.post(this.uploadurl + isVideo, formData, config)
         .then(function (response) {
           $("#loadingToast").hide()
           that.done += 1

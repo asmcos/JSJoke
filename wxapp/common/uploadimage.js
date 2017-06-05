@@ -1,5 +1,6 @@
 var multer = require('multer')
 var mkdirp = require('mkdirp')
+const exec = require('child_process').exec
 
 mkdirp('uploads')
 var storage = multer.diskStorage({
@@ -28,6 +29,13 @@ module.exports = function (app){
       var ct = new Date()
       app.images.create({url:req.refilename,createdate:ct})    
 
+      // Create a thumbnail image
+      if (req.query['video'] == '1'){
+        // ffmpeg -i upload-*.mp4  -ss 00:00:00.001 -vframes 1 upload-*.mp4.png -y
+        var cmd = 'ffmpeg -i uploads/' + req.refilename + ' -ss 00:00:00.001 -vframes 1 -f image2 uploads/'  + req.refilename +'.jpg -y'
+
+				exec(cmd)
+      }
       // return for ctrl+v , clipboard
       if (req.query['responseType'] == 'json'){
             return res.json({"fileName":"image.png","uploaded":1,"url":(req.headers.origin||'https://jsjoke.net')+ "/" +req.refilename})
