@@ -54,6 +54,7 @@
                    <article class="weui-article" style="padding-left:0px;">
                      <section>
                        <div v-html="j.content" style="white-space:pre-wrap"> </div>
+                       <div v-if="j.videourl"><video v-bind:src="j.videourl" v-bind:poster="j.videourl+'.jpg'" controls='true'></video> </div>
 											 <template v-if="j.comments">
                        <div class="weui-form-preview__ft">
                           <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" @click='joke(j,1)'><font><font><img  style="width:24px;" src="/static/joke.png"> {{j.joke}}</font></font></button>
