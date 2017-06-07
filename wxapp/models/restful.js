@@ -173,7 +173,7 @@ module.exports = function (app){
 
   Jokes.before('post', function(req, res, next) {
     if(req.isAuthenticated()){
-      req.body['createdate'] = new Date()
+      req.body['createdate'] = Date()
       req.body['pv'] = 1
       req.body['joke'] = 0
       req.body['unjoke'] = 0
@@ -236,7 +236,7 @@ module.exports = function (app){
 
   comments.before('post', function(req, res, next) {
     if(req.isAuthenticated()){
-      req.body['createdate'] = new Date()
+      req.body['createdate'] = Date()
       req.body['author'] = req.user._id
       req.body['joke'] = req.query.id
       update_author_level(req.query.id,LEVEL_COMMENT) // joke
