@@ -12,7 +12,18 @@ module.exports = function (app) {
   }, function(profile, done){
     Account.findOne({weappid:profile['openId']},function(err,user){
       if (user) {
-            return done(null, user); // user found, return that user
+						// 用户更改了昵称或者头像
+						if (user.nickname != profile['nickName'] || user.avatar != profile['avatarUrl']){
+							
+			  			user.nickname = profile['nickName']
+        			user.avatar   = profile['avatarUrl']
+							user.save(function(err){
+              
+								return done(err, user);
+							})
+						} else {
+            	return done(null, user); // user found, return that user
+						}
       } else {
             // if there is no user found with that facebook id, create them
         var user = new Account ()

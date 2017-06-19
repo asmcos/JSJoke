@@ -19,7 +19,7 @@ module.exports = function (app){
     title: String,
     content: String,
 		videourl: String,
-    createdate : { type:Date, default: Date.now },
+    createdate : { type:Date},
     pv: { type:Number, default: 0 },
     joke: {type:Number, default: 0 },
     unjoke: {type:Number,default: 0},
@@ -173,7 +173,7 @@ module.exports = function (app){
 
   Jokes.before('post', function(req, res, next) {
     if(req.isAuthenticated()){
-      req.body['createdate'] = Date()
+      req.body['createdate'] = Date() + ''
       req.body['pv'] = 1
       req.body['joke'] = 0
       req.body['unjoke'] = 0
