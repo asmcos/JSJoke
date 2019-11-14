@@ -11,7 +11,8 @@ var LEVEL_SHARE = 10;
 module.exports = function (app){
 	var mongoose = restful.mongoose
   //databases
-  mongoose.connect("mongodb://localhost/jsjokes")	
+  mongoose.connect("mongodb://127.0.0.1/jsjokes")	
+  //mongoose.connect("mongodb://localhost/jsjokes")	
 
   //collection 1,
   var Jokes = app.blogs = restful.model(
@@ -56,6 +57,8 @@ module.exports = function (app){
       l = req.query.limit
     }
 
+    l = parseInt(l)
+
     if (req.query.skip){
       s = req.query.skip
     }
@@ -85,7 +88,7 @@ module.exports = function (app){
                      // options: {sort: {'_id': -1 }}, 
                      populate: {path: 'author', select: {'nickname':1,'username':1}}})
          .exec(function (err, jokes) {
-           if (err) return handleError(err);
+           if (err) return res.json(err);
            res.json(jokes)
          })
    })
