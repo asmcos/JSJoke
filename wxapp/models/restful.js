@@ -110,6 +110,7 @@ module.exports = function (app){
       	 s = req.query.skip
     	 }
 
+	l = parseInt(l)
        // Jokes.find({author:[req.user._id]} ,{comments:0} ) // 审核 
        Jokes.find({author:[req.user._id]}/*,{comments:0}*/)
               .sort('-_id')
